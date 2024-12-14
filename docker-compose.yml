@@ -12,40 +12,30 @@ services:
       RABBITMQ_DEFAULT_PASS: guest
     healthcheck:
       test: ["CMD", "rabbitmqctl", "status"]
-      interval: 30s
+      interval: 10s
       timeout: 10s
       retries: 3
 
   consumer:
-    image: lahav97/cartservice:latest
+    image: lahav97/orderservice:latest
     container_name: consumer
     ports:
-      - "5252:5252"  # Exposing consumer service on port 5253 to avoid port conflict
+      - "5099:5099"  # Map local port 5099 to container's internal port 5099
     environment:
-      - ASPNETCORE_URLS=http://+:5252  
+      - ASPNETCORE_URLS=http://+:5099  # Matches the port in the consumer Dockerfile
       - RABBITMQ_HOST=rabbitmq  # Pointing to RabbitMQ container
     depends_on:
       rabbitmq:
         condition: service_healthy
-    healthcheck:
-      test: ["CMD", "curl", "--fail", "http://localhost:5252/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
 
-  producer:
-    image: lahav97/orderservice:latest
-    container_name: producer
+  publisher:
+    image: lahav97/cartservice:latest
+    container_name: publisher
     ports:
-      - "5099:5099"  # Exposing producer service on port 5099
+      - "5252:5252"  # Map local port 5252 to container's internal port 5252
     environment:
-      - ASPNETCORE_URLS=http://+:5099
+      - ASPNETCORE_URLS=http://+:5252  # Matches the port in the publisher Dockerfile
       - RABBITMQ_HOST=rabbitmq  # Pointing to RabbitMQ container
     depends_on:
       rabbitmq:
         condition: service_healthy
-    healthcheck:
-      test: ["CMD", "curl", "--fail", "http://localhost:5099/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3

@@ -1,4 +1,4 @@
-# ECommerceAppRabbit - CartService
+ # ECommerceAppRabbit - CartService
 
 ## Developer Information
 **Full Name:** Lahav Rabinovitz  
@@ -6,14 +6,14 @@
 
 ## API Endpoints
 ### Producer Application
-- **URL:** `http://localhost:5099/api/orders`
+- **URL:** "http://localhost:5252/Cart/create-order"
 - **Type:** POST
 - **Description:** This API allows clients to place a new order. The producer sends the order data to a RabbitMQ exchange, which is then consumed by the consumer for further processing.
 
 ### Consumer Application
-- **URL:** No direct URL for the consumer. It listens for incoming messages from RabbitMQ.
-- **Type of Request:** RabbitMQ queue consumer
-- **Description:** The consumer does not expose an HTTP API. Instead, it listens for messages on the orderQueue from the RabbitMQ exchange named orderExchange. Once a message is received, the consumer processes the order and updates its status to processed.
+- **URL:** "http://localhost:5099/api/orders/order-details"
+- **Type of Request:** GET
+- **Description:** This API allows clients to retrieve the details of an order by providing the order ID. The consumer fetches the order details from the database and returns them to the client.
 
 ## Exchange Type
 **Type:** Direct Exchange  
