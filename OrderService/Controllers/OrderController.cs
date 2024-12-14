@@ -16,13 +16,33 @@ namespace OrderService.Controllers
         [HttpGet("order-details")]
         public IActionResult GetOrderDetails([FromQuery] string orderId)
         {
-            var order = _orderService.GetOrderDetails(orderId);
-            if (order == null)
+            if (string.IsNullOrEmpty(orderId))
             {
-                return NotFound(new { message = "Order not found." });
+                return BadRequest(new { message = "OrderId cannot be null or empty." });
             }
 
-            return Ok(order);
+            var order = _orderService.GetOrderDetails(orderId);
+
+            if (order == null)
+            {
+                return NotFound(new { message = $"Order with order-ID '{orderId}' not found." });
+            }
+
+            var shippingCost = CalculateShippingCost(order.TotalAmount);
+
+            return Ok(new
+            {
+                order.OrderId,
+                order.CustomerId,
+                order.Status,
+                order.TotalAmount,
+                ShippingCost = shippingCost
+            });
+        }
+
+        private decimal CalculateShippingCost(decimal totalAmount)
+        {
+            return totalAmount * 0.02m;
         }
     }
 }

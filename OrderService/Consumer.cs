@@ -17,7 +17,7 @@ namespace OrderService
             _connection = connection;
             _channel = _connection.CreateModel();
 
-            _channel.QueueDeclare(queue: _queueName, durable: true, exclusive: false, autoDelete: false, arguments: null);
+            _channel.QueueDeclare(queue: _queueName, durable: false, exclusive: false, autoDelete: false, arguments: null);
             _channel.QueueBind(queue: _queueName, exchange: "orderExchange", routingKey: "new");
         }
 
