@@ -2,8 +2,8 @@
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /app
 
-# Copy the project files and restore any dependencies
-COPY . ./
+# Copy project files and restore dependencies
+COPY *.csproj ./
 RUN dotnet restore
 
 # Copy the remaining files and build the application

@@ -1,0 +1,228 @@
+{
+    "info": {
+      "name": "Order and Cart Service API - Comprehensive Tests",
+      "description": "Comprehensive tests for OrdersController and CartController, including edge cases, invalid scenarios, and special cases.",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+      {
+        "name": "Order Service",
+        "item": [
+          {
+            "name": "Get Order Details - Valid ID",
+            "request": {
+              "method": "GET",
+              "url": {
+                "raw": "http://localhost:5099/api/orders/order-details?orderId=12345",
+                "protocol": "http",
+                "host": ["localhost"],
+                "port": "5099",
+                "path": ["api", "orders", "order-details"],
+                "query": [
+                  {
+                    "key": "orderId",
+                    "value": "12345"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "name": "Get Order Details - Non-Existent ID",
+            "request": {
+              "method": "GET",
+              "url": {
+                "raw": "http://localhost:5099/api/orders/order-details?orderId=99999",
+                "protocol": "http",
+                "host": ["localhost"],
+                "port": "5099",
+                "path": ["api", "orders", "order-details"],
+                "query": [
+                  {
+                    "key": "orderId",
+                    "value": "99999"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "name": "Get Order Details - Missing ID",
+            "request": {
+              "method": "GET",
+              "url": {
+                "raw": "http://localhost:5099/api/orders/order-details",
+                "protocol": "http",
+                "host": ["localhost"],
+                "port": "5099",
+                "path": ["api", "orders", "order-details"]
+              }
+            }
+          },
+          {
+            "name": "Get Order Details - Negative ID (-12345)",
+            "request": {
+              "method": "GET",
+              "url": {
+                "raw": "http://localhost:5099/api/orders/order-details?orderId=-12345",
+                "protocol": "http",
+                "host": ["localhost"],
+                "port": "5099",
+                "path": ["api", "orders", "order-details"],
+                "query": [
+                  {
+                    "key": "orderId",
+                    "value": "-12345"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "name": "Update Order - Valid Update",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"orderId\": \"12345\",\n  \"status\": \"Shipped\"\n}"
+              },
+              "url": {
+                "raw": "http://localhost:5099/api/orders/update-order",
+                "protocol": "http",
+                "host": ["localhost"],
+                "port": "5099",
+                "path": ["api", "orders", "update-order"]
+              }
+            }
+          },
+          {
+            "name": "Update Order - Invalid Status",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"orderId\": \"12345\",\n  \"status\": \"INVALID_STATUS\"\n}"
+              },
+              "url": {
+                "raw": "http://localhost:5099/api/orders/update-order",
+                "protocol": "http",
+                "host": ["localhost"],
+                "port": "5099",
+                "path": ["api", "orders", "update-order"]
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "Cart Service",
+        "item": [
+          {
+            "name": "Create Order - Valid",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"orderId\": \"67890\",\n  \"itemsNum\": 3\n}"
+              },
+              "url": {
+                "raw": "http://localhost:5252/cart/create-order",
+                "protocol": "http",
+                "host": ["localhost"],
+                "port": "5252",
+                "path": ["cart", "create-order"]
+              }
+            }
+          },
+          {
+            "name": "Create Order - Negative ID (-67890)",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"orderId\": \"-67890\",\n  \"itemsNum\": 3\n}"
+              },
+              "url": {
+                "raw": "http://localhost:5252/cart/create-order",
+                "protocol": "http",
+                "host": ["localhost"],
+                "port": "5252",
+                "path": ["cart", "create-order"]
+              }
+            }
+          },
+          {
+            "name": "Update Order - Valid Update",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"orderId\": \"67890\",\n  \"status\": \"Cancelled\"\n}"
+              },
+              "url": {
+                "raw": "http://localhost:5252/cart/update-order",
+                "protocol": "http",
+                "host": ["localhost"],
+                "port": "5252",
+                "path": ["cart", "update-order"]
+              }
+            }
+          },
+          {
+            "name": "Update Order - Negative ID (-67890)",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"orderId\": \"-67890\",\n  \"status\": \"Cancelled\"\n}"
+              },
+              "url": {
+                "raw": "http://localhost:5252/cart/update-order",
+                "protocol": "http",
+                "host": ["localhost"],
+                "port": "5252",
+                "path": ["cart", "update-order"]
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+  

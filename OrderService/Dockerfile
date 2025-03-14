@@ -1,23 +1,21 @@
-# Use the official .NET SDK image to build the application
+# Build stage
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /app
 
-# Copy the project files and restore any dependencies
-COPY . ./
+# Copy project files and restore dependencies
+COPY *.csproj ./
 RUN dotnet restore
 
-# Copy the remaining files and build the application
+# Copy everything and build the application
 COPY . ./
-RUN dotnet publish -c Release -o out
+RUN dotnet publish -c Release -o /app/out
 
-# Use the official ASP.NET Core runtime image to run the application
+# Runtime stage
 FROM mcr.microsoft.com/dotnet/aspnet:7.0
 WORKDIR /app
 COPY --from=build /app/out .
 
-# Expose the port the application runs on
-ENV ASPNETCORE_URLS=http://+:5099
+# Expose ports and start application
 EXPOSE 5099
-
-# Start the application
+ENV ASPNETCORE_URLS=http://+:5099
 ENTRYPOINT ["dotnet", "OrderService.dll"]
