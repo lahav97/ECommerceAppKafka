@@ -2,7 +2,6 @@
 using OrderService.Models;
 using Confluent.Kafka;
 
-
 namespace OrderService
 {
     public class OrderConsumer
