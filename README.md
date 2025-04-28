@@ -1,7 +1,6 @@
 # ECommerceAppRabbit
 
 **Full Name:** Lahav Rabinovitz  
-**ID Number:** 209028349
 
 ## Topics Used - `ordersTopic` and the Producer and the Consumer used it.
 ### Producer
